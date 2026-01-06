@@ -36,11 +36,4 @@ int main()
     test("zehraa", 'x');
     test("", 'a');
     test("", 'x');
-    /*
-    char str[] = "zehraa aaa";
-    printf("test1 = ft_strchr: %s, strchr: %s\n", ft_strchr(str, 'a'), strchr(str, 'a'));
-    printf("test2 = ft_strchr: %s, strchr: %s\n", ft_strchr(str, '\0'), strchr(str, '\0'));
-    printf("test3 = ft_strchr: %s, strchr: %s\n", ft_strchr("", 'x'), strchr("", 'x'));
-    printf("test4 = ft_strchr: %s, strchr: %s", ft_strchr("", '\0'), strchr("", '\0'));
-    */
 }
