@@ -1,18 +1,19 @@
-CC=cc
-CFLAGS=-Wextra -Wall -Werror
+NAME = libft.a
+FLAGS = -Wall -Wextra -Werror
+SRC = $(shell find . ! -name "ft_lst*.c" -name "ft_*.c")
+BONUS = $(shell find . -name "ft_lst*.c")
+OBJ = $(SRC:.c=.o)
 
-CFILES=$(wildcard *.c)
-OBJECTS=$(CFILES:.c=.o)
 
-BINARY=libft.a
+all: $(NAME)
 
-all: $(BINARY)
+$(NAME):
+	gcc $(FLAGS) -c $(SRC)
+	ar rc $(NAME) *.o
+clean: 
+	/bin/rm -f  *.o
+fclean: clean
+	/bin/rm -f $(NAME)
+re: fclean all
 
-$(BINARY): $(OBJECTS)
-	ar rcs $(BINARY) $(OBJECTS)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $^
-
-clean:
-	rm -rf $(BINARY) $(OBJECTS)
+.PHONY: all bonus clean fclean re

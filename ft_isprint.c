@@ -1,31 +1,28 @@
+#include "libft.h"
 #include <stdio.h>
 #include <ctype.h>
 
 int	ft_isprint(char c)
 {
-	return (c >= 32 && c <= 126);
-}
-
-void	test(void)
-{
-	int	c;
-
-	c = 0;
-	while (c < 256)
+    if (c >= 32 && c<= 126) // printable characters including space
 	{
-		if ((ft_isprint(c) > 0 && isprint(c) == 0) || ft_isprint(c) == 0 && isprint(c) > 0)
-		{
-			printf("[ERROR] char: %d, ft_isprint: %d, isprint: %d\n", c, ft_isprint(c), isprint(c));
-			break ;
-		}
-		printf("[PASSED] char: %d, ft_isprint: %d, isprint: %d\n", c, ft_isprint(c), isprint(c));
-		c++;
+		return (1);
 	}
-}
-
-int	main(void)
-{
-	test();
 	return (0);
 }
 
+void test(void)
+{
+    int i = 0;
+    while(i < 256)
+    {
+        printf("[%d] %c --> ft_isprint: %d, isprint: %d\n", i, i, ft_isprint(i), isprint(i));
+        i++;
+    }
+}
+
+int main()
+{
+    test();
+    return (0);
+}
