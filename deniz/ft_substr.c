@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -7,12 +8,18 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	s_len;
 	char 	*substr;
 
+	if (s == NULL)
+		return (NULL);
 	s_len = 0;
 	while (s[s_len])
 		s_len++;
-	if (s_len == 0)
-		return (NULL);
-	if (start + len > s_len)
+	if (start >= s_len)
+	{
+		substr = malloc(1);
+		substr[0] = '\0';
+		return (substr);
+	}
+	if (len > s_len - start)
 		len = s_len - start;
 	substr = (char *)malloc((sizeof(char) * len) + 1);
 	if (substr == NULL)
@@ -27,49 +34,41 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }       
 
-int	main(void)
+void	run_test(char *test, char const *s, unsigned int start, size_t len, char *expected)
 {
 	char	*result;
 
-	printf("--- Applying Structural Testing --- \n");
+	result = ft_substr(s, start, len);
+	if (result == NULL)
+	{
+		if (expected == NULL)
+			printf("[+] SUCCESS: test=%s, params=(%s, %d, %lu), result: NULL\n", test, s, start, len);
+		else
+			printf("[-] ERROR: test=%s, params=(%s, %d, %lu), expected: %s but got: NULL\n", test, s, start, len, expected);
+	}
+	else
+	{
+		if (strcmp(expected, result) == 0)
+			printf("[+] SUCCESS: test=%s, params=(%s, %d, %lu), result: %s\n", test, s, start, len, result);
+		else
+			printf("[-] ERROR: test=%s, params=(%s, %d, %lu), expected: %s but got: %s\n", test, s, start, len, expected, result);
+	}
 
-	// TEST 1: Branch coverage (IF = true)
-	// Concept: We need to hit the path where (start + len > s_len)
-	result = ft_substr("ABCD", 1, 100);
-	printf("Test 1 (If True): Expected 'BCD' -> Got '%s'\n", result);
-	free(result);
-
-	// TEST 2: Branch coverage (IF = false)
-	// Concept: (start + len <= s_len)
-	result = ft_substr("ABCD", 1, 3);
-	printf("Test 2 (If false): Expected 'BCD' -> Got '%s'\n", result);
-	free(result);
-
-	// TEST 3: Loop Boundary Adequacy (0 Iterations)
-    // Concept: Does the loop handle running 0 times?
-    result = ft_substr("ABCD", 0, 0);
-    printf("Test 3 (Loop 0):   Expected ''     -> Got '%s'\n", result);
-    free(result);
-
-	// TEST 4: Loop Boundary Adequacy (1 Iteration)
-    // Concept: Does the loop handle running exactly 1 time?
-    result = ft_substr("ABCD", 0, 1);
-    printf("Test 4 (Loop 1):   Expected 'A'    -> Got '%s'\n", result);
-    free(result);
-
-	printf("--- STARTING STRESS TESTS ---\n");
-
-    // CASE 1: The Underflow Crash
-    // Goal: Test if code handles (s_len - start) when start > s_len
-    // Hypothesis: (0 - 1) will wrap to SIZE_MAX and cause massive malloc
-    printf("\n[TEST 1] Testing s='', start=1 (The Underflow)\n");
-    result = ft_substr("", 1, 1);
-    if (result == NULL)
-        printf("PASS: Correctly returned NULL (or handled gracefully)\n");
-    else
-    {
-        printf("FAIL: Returned pointer %p (likely allocated HUGE memory)\n", result);
-        free(result);
-    }
 	
+	free(result);
 }
+
+int	main(void)
+{
+	printf("=======================================\n");
+	printf("========STRUCTURAL TESTING==========\n");
+	printf("=======================================\n");
+	run_test("_null_string_return_null", NULL, 0, 1, NULL);
+	run_test("_empty_string_return_null_terrminate", "", 0, 0, "");
+	run_test("start_out_of_bound_return_null", "", 1, 0, "\0");
+	run_test("_ABCD_with_len_0_return_empty", "ABCD", 0, 0, "\0");
+	run_test("_standard", "ABCD", 0, 3, "ABC");
+
+	return (0);
+}
+
