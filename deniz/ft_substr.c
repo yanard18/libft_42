@@ -24,6 +24,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr = (char *)malloc((sizeof(char) * len) + 1);
 	if (substr == NULL)
 		return (NULL);
+	ft_strlcpy(substr, (s+start), len)
 	i = 0;
     while (i < len)
     {
@@ -53,8 +54,6 @@ void	run_test(char *test, char const *s, unsigned int start, size_t len, char *e
 		else
 			printf("[-] ERROR: test=%s, params=(%s, %d, %lu), expected: %s but got: %s\n", test, s, start, len, expected, result);
 	}
-
-	
 	free(result);
 }
 
