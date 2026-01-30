@@ -1,42 +1,27 @@
 #include "libft.h"
 #include <stdio.h>
 
-/*
-    strmapi gibi ama burada yeni bir char dizisi oluşturmuyoruz
-    değişiklikleri orijinal string üzerinde yapıyoruz
-
-*/
-
-void ft_striteri(char *s, void (*f)(unsigned int, char*))
+void	upper(unsigned int i, char *s)
 {
-    int i;
-
-    i = 0;
-    while (s[i])
-    {
-        (*f)(i, &s[i]); // s char dizisindeki i. karakterin adresini alıyoruz çünkü
-        // & kullandım çünkü amacım karakterin değerini değil bellekteki yerini değiştirmek
-
-        /* 
-            derleyici zaten fonksiyonun imzasından dolayı f'in bir fonksiyon pointerı olduğunu bildiği
-            için f() olarak da kullanılabilir, (*f)() olarak yazmak şart değil ama daha havalı
-        */
-       i++;
-    }
+	if (s[i] >= 97 && s[i] <= 122)
+		s[i] -= 32;
 }
 
-char *f(unsigned int c, char v)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-    if (c >= 97 && c <= 122)
-    {
-        return (c - 32);
-    }
-    return (c);
+	unsigned int i;
+
+	i = 0;
+	while (s[i])
+		f(i++, s);
 }
 
-int main()
-{
-    ft_striteri("eylul zehra", f);
 
-    return (0);
+
+int	main(void)
+{
+	char	s[] = "abcde";
+	ft_striteri(s, &upper);
+	printf("%s\n", s);
+	return (0);
 }
