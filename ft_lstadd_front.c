@@ -9,6 +9,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	*lst = new;
 }
 
+/*
 int	main(void)
 {
 	t_list	*lst;
@@ -20,3 +21,4 @@ int	main(void)
 	printf("%d\n", *(int *)lst->content);
 	return (0);
 }
+*/
