@@ -39,4 +39,7 @@ void	ft_putchar_fd(int c, int fd);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
+
+t_list	*ft_lstnew(void *content);
+
 #endif
