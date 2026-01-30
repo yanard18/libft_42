@@ -1,6 +1,7 @@
 #include "libft.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 /*
 
@@ -112,8 +113,4 @@ void test()
 
 }
 
-int main()
-{
-    test();
-    return (0);
-}
+
